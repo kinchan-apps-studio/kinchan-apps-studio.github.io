@@ -62,8 +62,9 @@ a:focus-visible,button:focus-visible{outline:3px solid #C065FF;outline-offset:3p
 <span style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 26px; color: #C065FF">Combat Record</span>
 </div>
 <div style="border: 1px solid rgba(255,255,255,0.35); padding: 8px">
-<video id="pv" src="video/v1.mp4" poster="img/v1.jpg" autoplay muted playsinline controls preload="metadata" aria-label="プレイ映像" style="width: 100%; aspect-ratio: 16 / 9; display: block; background: #000000"></video>
+<video id="pv" src="video/v1.mp4" poster="img/v1.jpg" autoplay muted playsinline preload="metadata" aria-label="プレイ映像（押すと一時停止・再生）" style="cursor: pointer; width: 100%; aspect-ratio: 16 / 9; display: block; background: #000000"></video>
 </div>
+<div style="display: flex; justify-content: flex-end; margin-top: 8px"><button type="button" id="pp" style="font-family: 'Zen Kaku Gothic New', sans-serif; font-size: 14px; color: #A8A49C; background: transparent; border: 1px solid rgba(255,255,255,0.25); padding: 8px 16px; min-height: 44px; cursor: pointer">一時停止</button></div>
 <div style="margin-top: 16px; display: flex; flex-wrap: wrap; gap: 12px">
 <button type="button" class="tb" data-i="0" aria-label="剣 vs 光（お寺）" style="flex: 1 1 150px; min-width: 0; padding: 0; background: #000000; border: 1px solid rgba(255,255,255,0.25); cursor: pointer; display: flex; flex-direction: column; text-align: left"><img src="img/v1.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block"><span style="font-family: 'Shippori Mincho B1', serif; font-weight: 700; font-size: 15px; letter-spacing: 0.06em; color: #F3F1EC; padding: 8px 10px; min-height: 44px; display: flex; align-items: center">剣 vs 光（お寺）</span></button>
 <button type="button" class="tb" data-i="1" aria-label="おかん、参戦" style="flex: 1 1 150px; min-width: 0; padding: 0; background: #000000; border: 1px solid rgba(255,255,255,0.25); cursor: pointer; display: flex; flex-direction: column; text-align: left"><img src="img/v2.jpg" alt="" loading="lazy" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block"><span style="font-family: 'Shippori Mincho B1', serif; font-weight: 700; font-size: 15px; letter-spacing: 0.06em; color: #F3F1EC; padding: 8px 10px; min-height: 44px; display: flex; align-items: center">おかん、参戦</span></button>
@@ -190,8 +191,12 @@ if(play){v.poster='img/v'+(i+1)+'.jpg';v.src='video/v'+(i+1)+'.mp4';v.muted=true
 bs.forEach(function(b,k){b.addEventListener('click',function(){show(k,true);});});
 v.addEventListener('ended',function(){show((idx+1)%n,true);});
 show(0,false);
+var pp=document.getElementById('pp'),held=false;
+function lab(){pp.textContent=v.paused?'再生':'一時停止';}
+function tog(){if(v.paused){held=false;go();}else{held=true;v.pause();}}
+v.addEventListener('click',tog);pp.addEventListener('click',tog);v.addEventListener('play',lab);v.addEventListener('pause',lab);
 function go(){v.muted=true;var p=v.play();if(p&&p.catch){p.catch(function(){});}}
-if('IntersectionObserver' in window){new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){go();}else{v.pause();}});},{threshold:0.25}).observe(v);}else{go();}
+if('IntersectionObserver' in window){new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){if(!held){go();}}else{v.pause();}});},{threshold:0.25}).observe(v);}else{go();}
 })();
 </script>
 </body>
