@@ -7,6 +7,8 @@
 <meta name="description" content="刀、光、拳、気、そして邪眼。56人の棒人間が町内で激突する対戦アクション。必殺技130種、ステージ13か所。iPhone向け、App Storeで無料配信中。">
 <meta name="apple-itunes-app" content="app-id=6829451572">
 <meta name="theme-color" content="#000000">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZHBVS39B9L"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ZHBVS39B9L');</script>
 <meta property="og:type" content="website">
 <meta property="og:title" content="ぼうにんげんFIGHT ― 封印を、解け。">
 <meta property="og:description" content="刀、光、拳、気、そして邪眼。56人の棒人間が町内で激突する対戦アクション。必殺技130種、ステージ13か所。iPhone向け、App Storeで無料配信中。">
@@ -176,6 +178,7 @@ a:focus-visible,button:focus-visible{outline:3px solid #C065FF;outline-offset:3p
 <footer style="max-width: 1200px; margin: 0 auto; padding: 30px 28px 48px; border-top: 1px solid rgba(255,255,255,0.22); display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: space-between; font-family: 'Zen Kaku Gothic New', sans-serif; font-size: 15px; color: #A8A49C">
 <div>ぼうにんげんFIGHT</div>
 <a href="https://app.notion.com/p/2db04956f69f801f9eb7dd2f6dffdfdc" style="font-family: 'Zen Kaku Gothic New', sans-serif">サポート・お問い合わせ</a>
+<div style="flex: 1 1 100%; font-size: 13px; line-height: 1.8">このサイトは、アクセス解析に Google アナリティクスを使用しています（Cookie を使用し、個人を特定する情報は集めていません）。</div>
 </footer>
 </div>
 <script>
@@ -191,6 +194,9 @@ if(play){v.poster='img/v'+(i+1)+'.jpg';v.src='video/v'+(i+1)+'.mp4';v.muted=true
 bs.forEach(function(b,k){b.addEventListener('click',function(){show(k,true);});});
 v.addEventListener('ended',function(){show((idx+1)%n,true);});
 show(0,false);
+function ev(n,p){try{if(window.gtag){gtag('event',n,p||{});}}catch(e){}}
+document.querySelectorAll('.cta').forEach(function(a,k){a.addEventListener('click',function(){ev('appstore_click',{position:k===0?'top':'bottom'});});});
+bs.forEach(function(b,k){b.addEventListener('click',function(){ev('video_select',{video_title:b.getAttribute('aria-label'),video_index:k+1});});});
 var pp=document.getElementById('pp'),held=false;
 function lab(){pp.textContent=v.paused?'再生':'一時停止';}
 function tog(){if(v.paused){held=false;go();}else{held=true;v.pause();}}
